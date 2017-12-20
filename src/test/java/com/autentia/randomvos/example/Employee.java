@@ -48,10 +48,5 @@ public class Employee extends Entity {
             entity.setAge(age);
             return this;
         }
-
-        @Override
-        public Employee build() {
-            return entity;
-        }
     }
 }

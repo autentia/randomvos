@@ -73,6 +73,8 @@ public class Entity {
             return (B) this;
         }
 
-        public abstract T build();
+        public final T build() {
+            return entity;
+        }
     }
 }

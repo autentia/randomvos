@@ -121,7 +121,7 @@ public class RandomObjectCreatorImpl implements RandomObjectCreator {
     private <T, B> Method getBuildMethod(Class<T> type, Class<B> builderType) {
         for (Class current = builderType; current != Object.class; current = current.getSuperclass()) {
             for (Method method: current.getDeclaredMethods()) {
-                if (method.getReturnType().equals(type) && method.getName().equals("build")) {
+                if (method.getReturnType().isAssignableFrom(type) && method.getName().equals("build")) {
                     return method;
                 }
             }

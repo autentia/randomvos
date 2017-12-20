@@ -54,10 +54,5 @@ public class Department extends Entity {
             entity.setSubdepartments(subdepartments);
             return this;
         }
-
-        @Override
-        public Department build() {
-            return entity;
-        }
     }
 }

@@ -76,10 +76,5 @@ public class Company extends Entity {
             entity.setEmployees(employees);
             return this;
         }
-
-        @Override
-        public Company build() {
-            return entity;
-        }
     }
 }
