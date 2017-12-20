@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 
 import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
@@ -62,7 +63,7 @@ public class ExtendedRandomBuilderTest {
         sut.addTypeRandomizer(Object.class, randomizer);
 
         verify(registry).putTypeRandomizer(typeCaptor.capture(), randomizerCaptor.capture());
-        assertThat(typeCaptor.getValue(), is(Object.class));
+        assertThat(typeCaptor.getValue(), is(equalTo((Class) Object.class)));
         assertThat(randomizerCaptor.getValue(), is(randomizer));
     }
 }

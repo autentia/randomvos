@@ -16,6 +16,8 @@ public class ExtendedRandomBuilder {
     private final ExtendedRandomSettings settings;
     private final RandomizerRegistry registry;
 
+    private Long seed;
+
     /**
      * Creates a new Builder with default settings:
      * <ul>
@@ -34,6 +36,17 @@ public class ExtendedRandomBuilder {
     protected ExtendedRandomBuilder(final ExtendedRandomSettings settings, final RandomizerRegistry registry) {
         this.settings = settings;
         this.registry = registry;
+    }
+
+    /**
+     * Sets the seed of the random generator.
+     *
+     * @param seed seed.
+     * @return this Builder.
+     */
+    public ExtendedRandomBuilder withSeed(final long seed) {
+        this.seed = seed;
+        return this;
     }
 
     /**
@@ -147,7 +160,7 @@ public class ExtendedRandomBuilder {
      */
     public ExtendedRandom build() {
         RandomObjectCreator creator = new RandomObjectCreatorImpl(settings, registry);
-        ExtendedRandom random = new ExtendedRandom(creator);
+        ExtendedRandom random = seed != null ? new ExtendedRandom(seed, creator) : new ExtendedRandom(creator);
         registry.init(settings, random);
         return random;
     }

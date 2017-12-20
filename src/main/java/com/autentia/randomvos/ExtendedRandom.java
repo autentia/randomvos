@@ -17,6 +17,11 @@ public class ExtendedRandom extends Random {
         this.creator = creator;
     }
 
+    protected ExtendedRandom(final long seed, final RandomObjectCreator creator) {
+        super(seed);
+        this.creator = creator;
+    }
+
     /**
      * Creates a new random object of the given type.
      * <p>
