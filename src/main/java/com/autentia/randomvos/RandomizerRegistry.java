@@ -16,6 +16,7 @@ import com.autentia.randomvos.randomizer.ShortRandomizer;
 import com.autentia.randomvos.randomizer.StringRandomizer;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -71,15 +72,15 @@ public class RandomizerRegistry {
     }
 
     public void init(final ExtendedRandomSettings settings, final ExtendedRandom random) {
-        ByteRandomizer byteRandomizer = new ByteRandomizer(random);
-        ShortRandomizer shortRandomizer = new ShortRandomizer(random);
-        IntRandomizer intRandomizer = new IntRandomizer(random);
-        LongRandomizer longRandomizer = new LongRandomizer(random);
-        FloatRandomizer floatRandomizer = new FloatRandomizer(random);
-        DoubleRandomizer doubleRandomizer = new DoubleRandomizer(random);
-        BigIntegerRandomizer bigIntegerRandomizer = new BigIntegerRandomizer(random);
-        BooleanRandomizer boolRandomizer = new BooleanRandomizer(random);
-        StringRandomizer stringRandomizer = new StringRandomizer(random, settings.getMinStringLength(), settings.getMaxStringLength());
+        ByteRandomizer byteRandomizer = new ByteRandomizer();
+        ShortRandomizer shortRandomizer = new ShortRandomizer();
+        IntRandomizer intRandomizer = new IntRandomizer();
+        LongRandomizer longRandomizer = new LongRandomizer();
+        FloatRandomizer floatRandomizer = new FloatRandomizer();
+        DoubleRandomizer doubleRandomizer = new DoubleRandomizer();
+        BigIntegerRandomizer bigIntegerRandomizer = new BigIntegerRandomizer();
+        BooleanRandomizer boolRandomizer = new BooleanRandomizer();
+        StringRandomizer stringRandomizer = new StringRandomizer(settings.getMinStringLength(), settings.getMaxStringLength());
 
         typeRandomizers.put(Byte.TYPE, byteRandomizer);
         typeRandomizers.put(Byte.class, byteRandomizer);
@@ -98,7 +99,17 @@ public class RandomizerRegistry {
         typeRandomizers.put(Boolean.class, boolRandomizer);
         typeRandomizers.put(String.class, stringRandomizer);
 
-        prototypeRandomizers.add(new EnumRandomizer(random));
-        prototypeRandomizers.add(new ListRandomizer(random, settings.getMinCollectionSize(), settings.getMaxCollectionSize()));
+        prototypeRandomizers.add(new EnumRandomizer());
+        prototypeRandomizers.add(new ListRandomizer(settings.getMinCollectionSize(), settings.getMaxCollectionSize()));
+
+        init(typeRandomizers.values(), random);
+        init(fieldRandomizers.values(), random);
+        init(prototypeRandomizers, random);
+    }
+
+    private void init(Collection<? extends Randomizer> randomizers, ExtendedRandom random) {
+        for (Randomizer randomizer: randomizers) {
+            randomizer.init(random);
+        }
     }
 }

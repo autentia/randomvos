@@ -1,14 +1,12 @@
 package com.autentia.randomvos.randomizer;
 
-import com.autentia.randomvos.ExtendedRandom;
 import java.util.List;
 
 public class EnumRandomizer<T extends Enum<T>> extends ParameterizedTypeAbstractRandomizer<Enum<T>, EnumRandomizer> {
 
     private final Class<Enum<T>> enumType;
 
-    public EnumRandomizer(ExtendedRandom random) {
-        super(random);
+    public EnumRandomizer() {
         enumType = null;
     }
 

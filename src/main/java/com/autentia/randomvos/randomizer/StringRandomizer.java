@@ -1,7 +1,5 @@
 package com.autentia.randomvos.randomizer;
 
-import com.autentia.randomvos.ExtendedRandom;
-
 public class StringRandomizer extends AbstractRandomizer<String> {
 
     private static final String ALFA = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -11,8 +9,7 @@ public class StringRandomizer extends AbstractRandomizer<String> {
     private final int minLength;
     private final int maxLength;
 
-    public StringRandomizer(ExtendedRandom random, int minLength, int maxLength) {
-        super(random);
+    public StringRandomizer(int minLength, int maxLength) {
         this.minLength = minLength;
         this.maxLength = maxLength;
     }

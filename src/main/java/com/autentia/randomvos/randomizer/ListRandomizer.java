@@ -1,6 +1,5 @@
 package com.autentia.randomvos.randomizer;
 
-import com.autentia.randomvos.ExtendedRandom;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,8 +9,7 @@ public class ListRandomizer<T> extends ParameterizedTypeAbstractRandomizer<List<
     private final int maxSize;
     private final Class<T> itemsType;
 
-    public ListRandomizer(ExtendedRandom random, int minSize, int maxSize) {
-        super(random);
+    public ListRandomizer(int minSize, int maxSize) {
         this.minSize = minSize;
         this.maxSize = maxSize;
         itemsType = null;

@@ -1,7 +1,5 @@
 package com.autentia.randomvos.randomizer;
 
-import com.autentia.randomvos.ExtendedRandom;
-
 /**
  * This randomizer should be used to build concrete implementations out of interfaces or abstract classes.
  * <p>
@@ -13,8 +11,7 @@ public class MultiTypeRandomizer<T> extends AbstractRandomizer<T> {
 
     private final Class<? extends T>[] types;
 
-    public MultiTypeRandomizer(ExtendedRandom random, Class<? extends T>... types) {
-        super(random);
+    public MultiTypeRandomizer(Class<? extends T>... types) {
         this.types = types;
     }
 
