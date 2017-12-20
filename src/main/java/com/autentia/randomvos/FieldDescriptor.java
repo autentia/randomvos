@@ -1,7 +1,6 @@
 package com.autentia.randomvos;
 
 import com.autentia.randomvos.internal.FieldInstance;
-import java.lang.reflect.Field;
 
 public class FieldDescriptor<T, C> {
 
@@ -30,15 +29,9 @@ public class FieldDescriptor<T, C> {
         return containingClass;
     }
 
-    public boolean matches(Field field) {
-        return type == null || type.equals(field.getType())
-            && fieldName == null || fieldName.equals(field.getName())
-            && containingClass == null || containingClass.equals(field.getDeclaringClass());
-    }
-
     public boolean matches(FieldInstance field) {
-        return type == null || type.equals(field.getType())
-            && fieldName == null || fieldName.equals(field.getName())
-            && containingClass == null || containingClass.equals(field.getContainingClass());
+        return (type == null || type.equals(field.getType()))
+            && (fieldName == null || fieldName.equals(field.getName()))
+            && (containingClass == null || containingClass.equals(field.getContainingClass()));
     }
 }

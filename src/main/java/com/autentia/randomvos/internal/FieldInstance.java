@@ -12,24 +12,35 @@ public class FieldInstance {
     private final Class<?> type;
     private final String name;
     private final Class<?> containingClass;
-    private final ParameterizedType genericType;
+    private final List<Class<?>> actualTypeArguments;
 
     public FieldInstance(Field field) {
         type = field.getType();
         name = field.getName();
         containingClass = field.getDeclaringClass();
-        genericType = asParameterizedType(field.getGenericType());
+        actualTypeArguments = getActualTypeArguments(field.getGenericType());
     }
 
     public FieldInstance(Method method, int pos) {
         type = method.getParameterTypes()[pos];
         name = method.getName();
         containingClass = method.getDeclaringClass();
-        genericType = asParameterizedType(method.getGenericParameterTypes()[pos]);
+        actualTypeArguments = getActualTypeArguments(method.getGenericParameterTypes()[pos]);
     }
 
-    private ParameterizedType asParameterizedType(Type type) {
-        return type instanceof ParameterizedType ? (ParameterizedType) type : null;
+    public FieldInstance(Class<?> type, String name, Class<?> containingClass) {
+        this.type = type;
+        this.name = name;
+        this.containingClass = containingClass;
+        actualTypeArguments = null;
+    }
+
+    private List<Class<?>> getActualTypeArguments(Type type) {
+        if (type instanceof ParameterizedType) {
+            Type[] actualTypes = ((ParameterizedType) type).getActualTypeArguments();
+            return (List) Arrays.asList(actualTypes); // A bit hacky...
+        }
+        return null;
     }
 
     public Class<?> getType() {
@@ -44,15 +55,7 @@ public class FieldInstance {
         return containingClass;
     }
 
-    public ParameterizedType getGenericType() {
-        return genericType;
-    }
-
-    public List<Class<?>> getActualGenericTypeArguments() {
-        if (genericType != null) {
-            Type[] actualTypes = genericType.getActualTypeArguments();
-            return (List) Arrays.asList(actualTypes); // A bit hacky...
-        }
-        return null;
+    public List<Class<?>> getActualTypeArguments() {
+        return actualTypeArguments;
     }
 }

@@ -57,7 +57,7 @@ public class RandomizerRegistry {
 
     private Randomizer buildCustomRandomizer(final FieldInstance field) {
         Class<?> type = field.getType();
-        List<Class<?>> itemsTypes = field.getActualGenericTypeArguments();
+        List<Class<?>> itemsTypes = field.getActualTypeArguments();
         return buildCustomRandomizer(type, itemsTypes);
     }
 
