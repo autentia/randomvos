@@ -1,6 +1,7 @@
 package com.autentia.randomvos;
 
 import com.autentia.randomvos.internal.RandomObjectCreator;
+import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Random;
 
@@ -31,7 +32,7 @@ public class ExtendedRandom extends Random {
      * @param type type of the object.
      * @return the object created.
      */
-    public <T> T nextObject(final Class<T> type) {
+    public <T> T nextObject(final Type type) {
         return creator.create(type);
     }
 
@@ -62,7 +63,7 @@ public class ExtendedRandom extends Random {
      * @param prototype prototype object.
      * @return list of random objects, each differing from the prototype object in one property only.
      */
-    public <T> List<T> nextObjectsFromPrototype(final Class<T> type, T prototype) {
+    public <T> List<T> nextObjectsFromPrototype(final Class<T> type, final T prototype) {
         return creator.createFromPrototype(type, prototype);
     }
 }

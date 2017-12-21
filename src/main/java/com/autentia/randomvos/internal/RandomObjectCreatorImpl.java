@@ -7,6 +7,7 @@ import com.autentia.randomvos.randomizer.Randomizer;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -22,24 +23,25 @@ public class RandomObjectCreatorImpl implements RandomObjectCreator {
     }
 
     @Override
-    public <T> T create(final Class<T> type) {
+    public <T> T create(final Type type) {
         if (depthMeter.tryEnter(type)) {
             try {
-                Randomizer<? extends T> randomizer = registry.get(type);
+                Randomizer<?> randomizer = registry.get(ObjectPlaceholder.forType(type));
                 if (randomizer != null) {
-                    return randomizer.nextRandomValue();
+                    return (T) randomizer.nextRandomValue();
                 }
 
-                T result = type.newInstance();
-                List<Field> fields = ExtendedRandomUtils.getFields(type);
+                Class<T> typeClass = (Class<T>) ExtendedRandomUtils.resolve(type);
+                T result = typeClass.newInstance();
+                List<Field> fields = ExtendedRandomUtils.getFields(typeClass);
                 ExtendedRandomUtils.setAccesible(fields);
                 for (Field field: fields) {
-                    Object value = createFieldValue(new FieldInstance(field));
+                    Object value = createFieldValue(ObjectPlaceholder.forField(field, type));
                     field.set(result, value);
                 }
                 return result;
             } catch (InstantiationException | IllegalAccessException e) {
-                throw new IllegalArgumentException("Cannot create instance of class " + type.getName());
+                throw new IllegalArgumentException("Cannot create instance of class " + type);
             } finally {
                 depthMeter.exit(type);
             }
@@ -53,7 +55,7 @@ public class RandomObjectCreatorImpl implements RandomObjectCreator {
             B builder = builderType.newInstance();
             List<Method> methods = getBuilderMethods(builderType);
             for (Method method: methods) {
-                Object value = createFieldValue(new FieldInstance(method, 0));
+                Object value = createFieldValue(ObjectPlaceholder.forParam(method, 0));
                 method.invoke(builder, value);
             }
             Method buildMethod = getBuildMethod(type, builderType);
@@ -67,7 +69,7 @@ public class RandomObjectCreatorImpl implements RandomObjectCreator {
     }
 
     @Override
-    public <T> List<T> createFromPrototype(Class<T> type, T prototype) {
+    public <T> List<T> createFromPrototype(final Class<T> type, final T prototype) {
         try {
             List<T> result = new ArrayList<>();
 
@@ -77,7 +79,7 @@ public class RandomObjectCreatorImpl implements RandomObjectCreator {
                 T instance = type.newInstance();
                 for (Field field: fields) {
                     Object orgValue = field.get(prototype);
-                    Object value = reference.equals(field) ? createFieldValue(new FieldInstance(field), orgValue) : orgValue;
+                    Object value = reference.equals(field) ? createFieldValue(ObjectPlaceholder.forField(field), orgValue) : orgValue;
                     field.set(instance, value);
                 }
                 result.add(instance);
@@ -88,9 +90,9 @@ public class RandomObjectCreatorImpl implements RandomObjectCreator {
         }
     }
 
-    private Object createFieldValue(final FieldInstance field, Object antiValue) {
+    private Object createFieldValue(final ObjectPlaceholder placeholder, final Object antiValue) {
         for (int i = 0; i < 10; i++) { // Avoid infinite loop when the type has just a single value.
-            Object result = createFieldValue(field);
+            Object result = createFieldValue(placeholder);
             if (!Objects.equals(antiValue, result)) {
                 return result;
             }
@@ -98,12 +100,12 @@ public class RandomObjectCreatorImpl implements RandomObjectCreator {
         return null;
     }
 
-    private Object createFieldValue(final FieldInstance field) {
-        Randomizer randomizer = registry.get(field);
+    private Object createFieldValue(final ObjectPlaceholder placeholder) {
+        Randomizer randomizer = registry.get(placeholder);
         if (randomizer != null) {
             return randomizer.nextRandomValue();
         }
-        return create(field.getType());
+        return create(placeholder.getType());
     }
 
     private <T> List<Method> getBuilderMethods(final Class<T> builderType) {
@@ -118,7 +120,7 @@ public class RandomObjectCreatorImpl implements RandomObjectCreator {
         return result;
     }
 
-    private <T, B> Method getBuildMethod(Class<T> type, Class<B> builderType) {
+    private <T, B> Method getBuildMethod(final Class<T> type, final Class<B> builderType) {
         for (Class current = builderType; current != Object.class; current = current.getSuperclass()) {
             for (Method method: current.getDeclaredMethods()) {
                 if (method.getReturnType().isAssignableFrom(type) && method.getName().equals("build")) {

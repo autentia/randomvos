@@ -2,10 +2,16 @@ package com.autentia.randomvos;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ExtendedRandomUtils {
+public final class ExtendedRandomUtils {
+
+    private ExtendedRandomUtils() {
+        // Empty.
+    }
 
     public static List<Field> getFields(final Class<?> type) {
         List<Field> result = new ArrayList<>();
@@ -18,6 +24,17 @@ public class ExtendedRandomUtils {
             }
         }
         return result;
+    }
+
+    public static Class<?> resolve(Type type) {
+        if (type instanceof Class) {
+            return (Class<?>) type;
+        }
+        if (type instanceof ParameterizedType) {
+            return resolve(((ParameterizedType) type).getRawType());
+        }
+        // TODO: Handle GenericArrayType.
+        return null;
     }
 
     public static void setAccesible(final List<Field> fields) {

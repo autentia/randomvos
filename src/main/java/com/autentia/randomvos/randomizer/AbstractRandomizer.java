@@ -15,7 +15,7 @@ public abstract class AbstractRandomizer<T> implements Randomizer<T> {
     }
 
     @Override
-    public void init(ExtendedRandom random) {
+    public void init(final ExtendedRandom random) {
         this.random = random;
     }
 }

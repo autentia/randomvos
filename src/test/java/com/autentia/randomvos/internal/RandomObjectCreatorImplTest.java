@@ -1,6 +1,5 @@
 package com.autentia.randomvos.internal;
 
-import com.autentia.randomvos.internal.RandomObjectCreatorImpl;
 import com.autentia.randomvos.ExtendedRandomSettings;
 import com.autentia.randomvos.RandomizerRegistry;
 import com.autentia.randomvos.example.Employee;
@@ -26,11 +25,11 @@ public class RandomObjectCreatorImplTest {
     @Before
     public void setupTest() {
         doReturn(2).when(settings).getDepth();
-        doReturn(intRandomizer).when(registry).get(Integer.TYPE);
-        doReturn(intRandomizer).when(registry).get(Integer.class);
-        doReturn(longRandomizer).when(registry).get(Long.TYPE);
-        doReturn(longRandomizer).when(registry).get(Long.class);
-        doReturn(stringRandomizer).when(registry).get(String.class);
+        doReturn(intRandomizer).when(registry).get(ObjectPlaceholder.forType(Integer.TYPE));
+        doReturn(intRandomizer).when(registry).get(ObjectPlaceholder.forType(Integer.class));
+        doReturn(longRandomizer).when(registry).get(ObjectPlaceholder.forType(Long.TYPE));
+        doReturn(longRandomizer).when(registry).get(ObjectPlaceholder.forType(Long.class));
+        doReturn(stringRandomizer).when(registry).get(ObjectPlaceholder.forType(String.class));
 
         doReturn(10).doReturn(11).when(intRandomizer).nextRandomValue();
         doReturn(20L).doReturn(21L).when(longRandomizer).nextRandomValue();

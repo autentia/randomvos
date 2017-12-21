@@ -2,7 +2,7 @@ package com.autentia.randomvos;
 
 import com.autentia.randomvos.example.Company;
 import com.autentia.randomvos.example.CompanyType;
-import com.autentia.randomvos.internal.FieldInstance;
+import com.autentia.randomvos.internal.ObjectPlaceholder;
 import com.autentia.randomvos.randomizer.EnumRandomizer;
 import com.autentia.randomvos.randomizer.ListRandomizer;
 import com.autentia.randomvos.randomizer.Randomizer;
@@ -31,30 +31,9 @@ public class RandomizerRegistryTest {
     }
 
     @Test
-    public void returnEnumRandomizer() {
+    public void returnEnumRandomizer() throws Exception {
         doReturn(0).when(random).nextInt(anyInt());
-
-        Randomizer<CompanyType> result = (Randomizer<CompanyType>) sut.get(CompanyType.class);
-
-        assertThat(result, is(instanceOf(EnumRandomizer.class)));
-        assertThat(result.nextRandomValue(), is(CompanyType.SME));
-    }
-
-    @Test
-    public void returnListRandomizer() {
-        doReturn(1).when(random).nextInt(anyInt());
-
-        Randomizer<List<?>> result = (Randomizer<List<?>>) sut.get(List.class);
-        List<?> list = result.nextRandomValue();
-
-        assertThat(result, is(instanceOf(ListRandomizer.class)));
-        assertThat(list, hasSize(1));
-    }
-
-    @Test
-    public void returnEnumFieldRandomizer() throws Exception {
-        doReturn(0).when(random).nextInt(anyInt());
-        FieldInstance field = new FieldInstance(Company.class.getDeclaredField("type"));
+        ObjectPlaceholder field = ObjectPlaceholder.forField(Company.class.getDeclaredField("type"));
 
         Randomizer<CompanyType> result = (Randomizer<CompanyType>) sut.get(field);
 
@@ -63,9 +42,9 @@ public class RandomizerRegistryTest {
     }
 
     @Test
-    public void returnListFieldRandomizer() throws Exception {
+    public void returnListRandomizer() throws Exception {
         doReturn(1).when(random).nextInt(anyInt());
-        FieldInstance field = new FieldInstance(Company.class.getDeclaredField("employees"));
+        ObjectPlaceholder field = ObjectPlaceholder.forField(Company.class.getDeclaredField("employees"));
 
         Randomizer<List<?>> result = (Randomizer<List<?>>) sut.get(field);
         List<?> list = result.nextRandomValue();

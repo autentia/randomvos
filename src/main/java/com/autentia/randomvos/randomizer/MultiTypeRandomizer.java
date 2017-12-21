@@ -11,7 +11,7 @@ public class MultiTypeRandomizer<T> extends AbstractRandomizer<T> {
 
     private final Class<? extends T>[] types;
 
-    public MultiTypeRandomizer(Class<? extends T>... types) {
+    public MultiTypeRandomizer(final Class<? extends T>... types) {
         this.types = types;
     }
 

@@ -9,7 +9,7 @@ public class StringRandomizer extends AbstractRandomizer<String> {
     private final int minLength;
     private final int maxLength;
 
-    public StringRandomizer(int minLength, int maxLength) {
+    public StringRandomizer(final int minLength, final int maxLength) {
         this.minLength = minLength;
         this.maxLength = maxLength;
     }

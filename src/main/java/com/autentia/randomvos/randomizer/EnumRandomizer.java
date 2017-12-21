@@ -1,6 +1,6 @@
 package com.autentia.randomvos.randomizer;
 
-import java.util.List;
+import com.autentia.randomvos.internal.ObjectPlaceholder;
 
 public class EnumRandomizer<T extends Enum<T>> extends ParameterizedTypeAbstractRandomizer<Enum<T>, EnumRandomizer> {
 
@@ -10,19 +10,20 @@ public class EnumRandomizer<T extends Enum<T>> extends ParameterizedTypeAbstract
         enumType = null;
     }
 
-    private EnumRandomizer(EnumRandomizer<T> prototype, Class<Enum<T>> enumType) {
+    private EnumRandomizer(final EnumRandomizer<T> prototype, final Class<Enum<T>> enumType) {
         super(prototype);
         this.enumType = enumType;
     }
 
     @Override
-    public Enum<T> nextRandomValue() {
+    public T nextRandomValue() {
         Enum<T>[] enumValues = enumType.getEnumConstants();
-        return enumValues[getRandom().nextInt(enumValues.length)];
+        return (T) enumValues[getRandom().nextInt(enumValues.length)];
     }
 
     @Override
-    public EnumRandomizer cloneIfApplicable(Class<?> type, List<Class<?>> actualTypes) {
+    public EnumRandomizer cloneIfApplicable(final ObjectPlaceholder placeholder) {
+        Class<?> type = placeholder.findClass();
         return type.isEnum() ? new EnumRandomizer(this, type) : null;
     }
 }

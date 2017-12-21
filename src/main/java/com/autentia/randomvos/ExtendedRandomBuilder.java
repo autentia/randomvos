@@ -4,7 +4,6 @@ import com.autentia.randomvos.internal.RandomObjectCreator;
 import com.autentia.randomvos.internal.RandomObjectCreatorImpl;
 import com.autentia.randomvos.randomizer.MultiTypeRandomizer;
 import com.autentia.randomvos.randomizer.Randomizer;
-import java.util.Arrays;
 
 /**
  * To grab an instance of {@link ExtendedRandom}, the client must go through this Builder.
@@ -105,53 +104,17 @@ public class ExtendedRandomBuilder {
     }
 
     /**
-     * Not yet implemented.
-     *
-     * @param values excluded fields.
-     * @return this Builder.
-     */
-    public ExtendedRandomBuilder excludeFields(final FieldDescriptor... values) {
-        settings.setExcludedFields(Arrays.asList(values));
-        return this;
-    }
-
-    /**
-     * Not yet implemented.
-     *
-     * @param values excluded types.
-     * @return this Builder.
-     */
-    public ExtendedRandomBuilder excludeClasses(final Class... values) {
-        settings.setExcludedClasses(Arrays.asList(values));
-        return this;
-    }
-
-    /**
-     * Register a custom randomizer that is chosen as source of random objects whenever the given type is encountered.
+     * Register a custom randomizer that is chosen as source of random objects whenever the given selector
+     * matches an object placeholder.
      * <p>
      * Specially useful is {@link MultiTypeRandomizer} to resolve implementations of interfaces and abstract classes.
      *
-     * @param <T> type of random objects.
-     * @param type type that triggers the randomizer.
+     * @param selector randomizer selector that is matched a random object's placeholder.
      * @param value the randomizer.
      * @return this Builder.
      */
-    public <T> ExtendedRandomBuilder addTypeRandomizer(final Class<T> type, final Randomizer<? extends T> value) {
-        registry.putTypeRandomizer(type, value);
-        return this;
-    }
-
-    /**
-     * Register a custom randomizer that is chosen as source of random objects whenever the given field descriptor
-     * matches.
-     *
-     * @param <T> type of random objects.
-     * @param field field descriptor that is matched the a random object's field.
-     * @param value the randomizer.
-     * @return this Builder.
-     */
-    public <T> ExtendedRandomBuilder addFieldRandomizer(final FieldDescriptor<T, ?> field, final Randomizer<? extends T> value) {
-        registry.putFieldRandomizer(field, value);
+    public ExtendedRandomBuilder addRandomizer(final RandomizerSelector selector, final Randomizer<?> value) {
+        registry.put(selector, value);
         return this;
     }
 

@@ -17,28 +17,28 @@ public class ExtendedRandomTest {
 
     @Test
     public void createRecursiveObject() {
-        ExtendedRandom random = new ExtendedRandomBuilder().build();
+        ExtendedRandom sut = new ExtendedRandomBuilder().build();
 
-        Department result = random.nextObject(Department.class);
+        Department result = sut.nextObject(Department.class);
 
         assertThat(result, is(not(nullValue())));
     }
 
     @Test
     public void createRecursiveObjectWithBuilder() {
-        ExtendedRandom random = new ExtendedRandomBuilder().build();
+        ExtendedRandom sut = new ExtendedRandomBuilder().build();
 
-        Department result = random.nextObjectFromBuilder(Department.class, Department.Builder.class);
+        Department result = sut.nextObjectFromBuilder(Department.class, Department.Builder.class);
 
         assertThat(result, is(not(nullValue())));
     }
 
     @Test
     public void createRecursiveObjectsFromPrototype() {
-        ExtendedRandom random = new ExtendedRandomBuilder().build();
+        ExtendedRandom sut = new ExtendedRandomBuilder().build();
 
-        Department prototype = random.nextObject(Department.class);
-        List<Department> result = random.nextObjectsFromPrototype(Department.class, prototype);
+        Department prototype = sut.nextObject(Department.class);
+        List<Department> result = sut.nextObjectsFromPrototype(Department.class, prototype);
 
         assertThat(result, hasSize(3));
     }

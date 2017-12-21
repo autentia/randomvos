@@ -1,5 +1,7 @@
 package com.autentia.randomvos.randomizer;
 
+import com.autentia.randomvos.internal.ObjectPlaceholder;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +9,7 @@ public class ListRandomizer<T> extends ParameterizedTypeAbstractRandomizer<List<
 
     private final int minSize;
     private final int maxSize;
-    private final Class<T> itemsType;
+    private final Type itemsType;
 
     public ListRandomizer(int minSize, int maxSize) {
         this.minSize = minSize;
@@ -15,7 +17,7 @@ public class ListRandomizer<T> extends ParameterizedTypeAbstractRandomizer<List<
         itemsType = null;
     }
 
-    private ListRandomizer(ListRandomizer<T> prototype, Class<T> itemsType) {
+    private ListRandomizer(final ListRandomizer<T> prototype, final Type itemsType) {
         super(prototype);
         minSize = prototype.minSize;
         maxSize = prototype.maxSize;
@@ -31,16 +33,18 @@ public class ListRandomizer<T> extends ParameterizedTypeAbstractRandomizer<List<
 
         List<T> result = new ArrayList<>(size);
         for (int i = 0; i < size; i++) {
-            result.add(getRandom().nextObject(itemsType));
+            result.add((T) getRandom().nextObject(itemsType));
         }
         return result;
     }
 
     @Override
-    public ListRandomizer cloneIfApplicable(Class<?> type, List<Class<?>> actualTypes) {
+    public ListRandomizer cloneIfApplicable(final ObjectPlaceholder placeholder) {
+        Class<?> type = placeholder.findClass();
         if (type.equals(List.class)) {
-            Class<?> itemType = actualTypes == null || actualTypes.isEmpty() ? Object.class : actualTypes.get(0);
-            return new ListRandomizer(this, itemType);
+            List<Type> actualTypes = placeholder.findActualTypeArguments();
+            Type actualType = actualTypes == null || actualTypes.isEmpty() ? Object.class : actualTypes.get(0);
+            return new ListRandomizer(this, actualType);
         }
         return null;
     }

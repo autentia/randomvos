@@ -1,6 +1,6 @@
 package com.autentia.randomvos.randomizer;
 
-import java.util.List;
+import com.autentia.randomvos.internal.ObjectPlaceholder;
 
 public abstract class ParameterizedTypeAbstractRandomizer<T, U extends ParameterizedTypeAbstractRandomizer> extends AbstractRandomizer<T> {
 
@@ -8,9 +8,9 @@ public abstract class ParameterizedTypeAbstractRandomizer<T, U extends Parameter
         // Empty.
     }
 
-    protected ParameterizedTypeAbstractRandomizer(U prototype) {
+    protected ParameterizedTypeAbstractRandomizer(final U prototype) {
         init(prototype.getRandom());
     }
 
-    public abstract U cloneIfApplicable(Class<?> type, List<Class<?>> actualTypes);
+    public abstract U cloneIfApplicable(final ObjectPlaceholder placeholder);
 }

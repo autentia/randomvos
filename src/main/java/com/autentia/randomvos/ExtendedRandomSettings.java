@@ -1,9 +1,5 @@
 package com.autentia.randomvos;
 
-import com.autentia.randomvos.FieldDescriptor;
-import java.util.Collections;
-import java.util.List;
-
 public class ExtendedRandomSettings {
 
     private int depth;
@@ -11,8 +7,6 @@ public class ExtendedRandomSettings {
     private int maxCollectionSize;
     private int minStringLength;
     private int maxStringLength;
-    private List<FieldDescriptor> excludedFields;
-    private List<Class> excludedClasses;
 
     protected ExtendedRandomSettings() {
         depth = 2;
@@ -20,8 +14,6 @@ public class ExtendedRandomSettings {
         maxCollectionSize = 5;
         minStringLength = -1;
         maxStringLength = 10;
-        excludedFields = Collections.emptyList();
-        excludedClasses = Collections.emptyList();
     }
 
     public int getDepth() {
@@ -62,21 +54,5 @@ public class ExtendedRandomSettings {
 
     protected void setMaxStringLength(final int maxStringLength) {
         this.maxStringLength = maxStringLength;
-    }
-
-    public List<FieldDescriptor> getExcludedFields() {
-        return excludedFields;
-    }
-
-    protected void setExcludedFields(final List<FieldDescriptor> excludedFields) {
-        this.excludedFields = excludedFields;
-    }
-
-    public List<Class> getExcludedClasses() {
-        return excludedClasses;
-    }
-
-    protected void setExcludedClasses(final List<Class> excludedClasses) {
-        this.excludedClasses = excludedClasses;
     }
 }
