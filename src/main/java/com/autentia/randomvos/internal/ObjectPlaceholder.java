@@ -97,11 +97,6 @@ public class ObjectPlaceholder {
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(type, name, containingClass);
-    }
-
-    @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof ObjectPlaceholder)) {
             return false;
@@ -111,4 +106,16 @@ public class ObjectPlaceholder {
             && Objects.equals(name, other.name)
             && Objects.equals(containingClass, other.containingClass);
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(type, name, containingClass);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("{Type = %s, Name = %s, Containing class = %s}", type, name, containingClass);
+    }
+
+
 }

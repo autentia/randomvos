@@ -101,11 +101,15 @@ public class RandomObjectCreatorImpl implements RandomObjectCreator {
     }
 
     private Object createFieldValue(final ObjectPlaceholder placeholder) {
-        Randomizer randomizer = registry.get(placeholder);
-        if (randomizer != null) {
-            return randomizer.nextRandomValue();
+        try {
+            Randomizer randomizer = registry.get(placeholder);
+            if (randomizer != null) {
+                return randomizer.nextRandomValue();
+            }
+            return create(placeholder.getType());
+        } catch (Exception e) {
+            throw new RuntimeException("Could not create random value for placeholder (probably needs randomizer): " + placeholder, e);
         }
-        return create(placeholder.getType());
     }
 
     private <T> List<Method> getBuilderMethods(final Class<T> builderType) {

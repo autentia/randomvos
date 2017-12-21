@@ -17,6 +17,12 @@ public class ListRandomizer<T> extends ParameterizedTypeAbstractRandomizer<List<
         itemsType = null;
     }
 
+    public ListRandomizer(int minSize, int maxSize, final Type itemsType) {
+        this.minSize = minSize;
+        this.maxSize = maxSize;
+        this.itemsType = itemsType;
+    }
+
     private ListRandomizer(final ListRandomizer<T> prototype, final Type itemsType) {
         super(prototype);
         minSize = prototype.minSize;

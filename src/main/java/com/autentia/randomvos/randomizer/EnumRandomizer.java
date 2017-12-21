@@ -10,6 +10,10 @@ public class EnumRandomizer<T extends Enum<T>> extends ParameterizedTypeAbstract
         enumType = null;
     }
 
+    public EnumRandomizer(final Class<Enum<T>> enumType) {
+        this.enumType = enumType;
+    }
+
     private EnumRandomizer(final EnumRandomizer<T> prototype, final Class<Enum<T>> enumType) {
         super(prototype);
         this.enumType = enumType;
