@@ -7,12 +7,21 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Utility methods.
+ */
 public final class ExtendedRandomUtils {
 
     private ExtendedRandomUtils() {
         // Empty.
     }
 
+    /**
+     * Gets all fields declared by a class and its superclasses.
+     *
+     * @param type the class.
+     * @return the list of fields.
+     */
     public static List<Field> getFields(final Class<?> type) {
         List<Field> result = new ArrayList<>();
         for (Class current = type; current != Object.class; current = current.getSuperclass()) {
@@ -26,6 +35,12 @@ public final class ExtendedRandomUtils {
         return result;
     }
 
+    /**
+     * Tries to resolve a type to a concrete class.
+     *
+     * @param type the type to resolve.
+     * @return the class instance represented by the given type; null if it cannot be found.
+     */
     public static Class<?> resolve(Type type) {
         if (type instanceof Class) {
             return (Class<?>) type;
@@ -37,12 +52,24 @@ public final class ExtendedRandomUtils {
         return null;
     }
 
+    /**
+     * Changes accessibility of the given list of fields.
+     * @param fields a list of fields.
+     */
     public static void setAccesible(final List<Field> fields) {
         for (Field field: fields) {
             field.setAccessible(true);
         }
     }
 
+    /**
+     * Shallow copy of an instance of a class.
+     *
+     * @param <T> the type of the objects.
+     * @param type the class of the objects.
+     * @param prototype the prototype object to copy from.
+     * @return a new instance where all fields have the same value as the prototype.
+     */
     public static <T> T copyPrototype(final Class<T> type, final T prototype) {
         try {
             T result = type.newInstance();

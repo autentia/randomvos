@@ -22,6 +22,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+/**
+ * Used internally to manage all randomizers and the types, fields and methods where they apply.
+ */
 public class RandomizerRegistry {
 
     private final Map<RandomizerSelector, Randomizer<?>> randomizers;

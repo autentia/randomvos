@@ -4,8 +4,8 @@ import com.autentia.randomvos.internal.ObjectPlaceholder;
 import java.util.Objects;
 
 /**
- * A template to decide whether a {@link Randomizer} can be applied to either all appearances of a type, a field in one
- * or more classes or a method parameter.
+ * A template to decide whether a {@link com.autentia.randomvos.randomizer.Randomizer} can be applied to
+ * either all appearances of a type, a field in one or more classes or a method parameter.
  */
 public class RandomizerSelector {
 
@@ -56,18 +56,13 @@ public class RandomizerSelector {
     /**
      * Checks if this selector matches the given instance placeholder.
      *
-     * @param field
-     * @return
+     * @param placeholder placeholder to match against this selector.
+     * @return true if the given placeholder matches; false otherwise.
      */
-    public boolean matches(final ObjectPlaceholder field) {
-        return (type == null || type.equals(field.getType()))
-            && (name == null || name.equals(field.getName()))
-            && (containingClass == null || containingClass.equals(field.getContainingClass()));
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(type, name, containingClass);
+    public boolean matches(final ObjectPlaceholder placeholder) {
+        return (type == null || type.equals(placeholder.getType()))
+            && (name == null || name.equals(placeholder.getName()))
+            && (containingClass == null || containingClass.equals(placeholder.getContainingClass()));
     }
 
     @Override
@@ -79,5 +74,15 @@ public class RandomizerSelector {
         return Objects.equals(type, other.type)
             && Objects.equals(name, other.name)
             && Objects.equals(containingClass, other.containingClass);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(type, name, containingClass);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("{Type = %s, Name = %s, Containing class = %s}", type, name, containingClass);
     }
 }

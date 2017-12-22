@@ -116,6 +116,4 @@ public class ObjectPlaceholder {
     public String toString() {
         return String.format("{Type = %s, Name = %s, Containing class = %s}", type, name, containingClass);
     }
-
-
 }

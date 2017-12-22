@@ -3,7 +3,7 @@ package com.autentia.randomvos.randomizer;
 /**
  * This randomizer should be used to build concrete implementations out of interfaces or abstract classes.
  * <p>
- * It should be manually registered as a "type" randomizer.
+ * It should be manually registered and bound to a type-only {@link com.autentia.randomvos.RandomizerSelector}.
  *
  * @param <T> The interface or abstract class implemented/extended by all concrete classes.
  */
