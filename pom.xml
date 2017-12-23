@@ -3,7 +3,7 @@
 
     <groupId>com.autentia</groupId>
     <artifactId>randomvos</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>randomvos</name>
@@ -40,7 +40,7 @@
         <connection>scm:git:git://github.com/cdelhoyo/randomvos.git</connection>
         <developerConnection>scm:git:https://github.com/cdelhoyo/randomvos.git</developerConnection>
         <url>https://github.com/cdelhoyo/randomvos</url>
-      <tag>randomvos-1.0.1</tag>
+      <tag>HEAD</tag>
   </scm>
 
     <distributionManagement>
