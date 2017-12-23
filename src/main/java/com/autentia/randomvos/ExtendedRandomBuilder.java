@@ -104,8 +104,8 @@ public class ExtendedRandomBuilder {
     }
 
     /**
-     * Register a custom randomizer that is chosen as source of random objects whenever the given selector
-     * matches an object placeholder.
+     * Register a custom randomizer that is chosen as source of random objects whenever the given selector matches an
+     * object placeholder.
      * <p>
      * Specially useful is {@link MultiTypeRandomizer} to resolve implementations of interfaces and abstract classes.
      *

@@ -86,7 +86,7 @@ public class ObjectPlaceholder {
     }
 
     public Class<?> findClass() {
-        return  ExtendedRandomUtils.resolve(type);
+        return ExtendedRandomUtils.resolve(type);
     }
 
     public List<Type> findActualTypeArguments() {

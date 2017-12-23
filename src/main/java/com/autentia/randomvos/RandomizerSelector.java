@@ -4,8 +4,8 @@ import com.autentia.randomvos.internal.ObjectPlaceholder;
 import java.util.Objects;
 
 /**
- * A template to decide whether a {@link com.autentia.randomvos.randomizer.Randomizer} can be applied to
- * either all appearances of a type, a field in one or more classes or a method parameter.
+ * A template to decide whether a {@link com.autentia.randomvos.randomizer.Randomizer} can be applied to either all
+ * appearances of a type, a field in one or more classes or a method parameter.
  */
 public class RandomizerSelector {
 

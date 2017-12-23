@@ -27,7 +27,7 @@ public final class ExtendedRandomUtils {
         for (Class current = type; current != Object.class; current = current.getSuperclass()) {
             Field[] fields = current.getDeclaredFields();
             for (Field field: fields) {
-                if (!Modifier.isFinal(field.getModifiers())) {
+                if (!Modifier.isFinal(field.getModifiers()) && !field.isSynthetic()) {
                     result.add(field);
                 }
             }
@@ -54,6 +54,7 @@ public final class ExtendedRandomUtils {
 
     /**
      * Changes accessibility of the given list of fields.
+     *
      * @param fields a list of fields.
      */
     public static void setAccesible(final List<Field> fields) {
