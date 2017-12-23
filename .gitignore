@@ -12,5 +12,9 @@ target/
 .settings
 .classpath
 .project
+
 bin/
-/nbproject/
+nbproject/
+pom.xml.releaseBackup
+release.properties
+
