@@ -12,7 +12,7 @@
         This is useful for unit testing Value Objects and their Builders,
         making sure all properties are properly set and equals() and hashCode() are correctly defined.
     </description>
-    <url>https://github.com/cdelhoyo/randomvos</url>
+    <url>https://github.com/autentia/randomvos</url>
 
     <licenses>
         <license>
@@ -37,11 +37,11 @@
     </developers>
 
     <scm>
-        <connection>scm:git:git://github.com/cdelhoyo/randomvos.git</connection>
-        <developerConnection>scm:git:https://github.com/cdelhoyo/randomvos.git</developerConnection>
-        <url>https://github.com/cdelhoyo/randomvos</url>
-      <tag>HEAD</tag>
-  </scm>
+        <connection>scm:git:git://github.com/autentia/randomvos.git</connection>
+        <developerConnection>scm:git:https://github.com/autentia/randomvos.git</developerConnection>
+        <url>https://github.com/autentia/randomvos</url>
+        <tag>HEAD</tag>
+    </scm>
 
     <distributionManagement>
         <snapshotRepository>
